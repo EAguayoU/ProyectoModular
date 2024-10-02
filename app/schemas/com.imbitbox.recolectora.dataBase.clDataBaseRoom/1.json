@@ -1,0 +1,234 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "4ad83cec65adcb4b047aa1fd6ae446ea",
+    "entities": [
+      {
+        "tableName": "ItinerarioDetalle",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdItinerarioDetalle` INTEGER NOT NULL, `IdItinerario` INTEGER NOT NULL, `IdSucursal` INTEGER NOT NULL, `Sucursal` TEXT NOT NULL, `Latitud` TEXT NOT NULL, `Longitud` TEXT NOT NULL, `IdVehiculo` INTEGER NOT NULL, `Vehiculo` TEXT NOT NULL, `IdCliente` INTEGER NOT NULL, `Cliente` TEXT NOT NULL, `CatEstatus` INTEGER NOT NULL, `Estatus` TEXT NOT NULL, `Orden` INTEGER NOT NULL, `FotosAntes` INTEGER NOT NULL, `FotosDespues` INTEGER NOT NULL, `FirmaDigital` TEXT NOT NULL, `QR` INTEGER NOT NULL, `Fecha` TEXT NOT NULL, `HoraAsignacion` TEXT NOT NULL, `HoraLlegada` TEXT NOT NULL, `HoraTermino` TEXT NOT NULL, `Horario` TEXT NOT NULL, `NumeroEmpleado` TEXT NOT NULL, `NombreEmpleado` TEXT NOT NULL, `TipoAsignacion` TEXT NOT NULL, `Umbral` INTEGER NOT NULL, `EsNumeroEmpleadoRecoleccion` INTEGER NOT NULL, PRIMARY KEY(`IdItinerarioDetalle`))",
+        "fields": [
+          {
+            "fieldPath": "IdItinerarioDetalle",
+            "columnName": "IdItinerarioDetalle",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdItinerario",
+            "columnName": "IdItinerario",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdSucursal",
+            "columnName": "IdSucursal",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Sucursal",
+            "columnName": "Sucursal",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Latitud",
+            "columnName": "Latitud",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Longitud",
+            "columnName": "Longitud",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdVehiculo",
+            "columnName": "IdVehiculo",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Vehiculo",
+            "columnName": "Vehiculo",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdCliente",
+            "columnName": "IdCliente",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Cliente",
+            "columnName": "Cliente",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "CatEstatus",
+            "columnName": "CatEstatus",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Estatus",
+            "columnName": "Estatus",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Orden",
+            "columnName": "Orden",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "FotosAntes",
+            "columnName": "FotosAntes",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "FotosDespues",
+            "columnName": "FotosDespues",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "FirmaDigital",
+            "columnName": "FirmaDigital",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "QR",
+            "columnName": "QR",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Fecha",
+            "columnName": "Fecha",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "HoraAsignacion",
+            "columnName": "HoraAsignacion",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "HoraLlegada",
+            "columnName": "HoraLlegada",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "HoraTermino",
+            "columnName": "HoraTermino",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Horario",
+            "columnName": "Horario",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "NumeroEmpleado",
+            "columnName": "NumeroEmpleado",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "NombreEmpleado",
+            "columnName": "NombreEmpleado",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "TipoAsignacion",
+            "columnName": "TipoAsignacion",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Umbral",
+            "columnName": "Umbral",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "EsNumeroEmpleadoRecoleccion",
+            "columnName": "EsNumeroEmpleadoRecoleccion",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "IdItinerarioDetalle"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "ImgItinerario",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`IdImgItinerario` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `IdItinerarioDetalle` INTEGER NOT NULL, `Tipo` TEXT NOT NULL, `Imagen` TEXT NOT NULL, `Ruta` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "IdImgItinerario",
+            "columnName": "IdImgItinerario",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "IdItinerarioDetalle",
+            "columnName": "IdItinerarioDetalle",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Tipo",
+            "columnName": "Tipo",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Imagen",
+            "columnName": "Imagen",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "Ruta",
+            "columnName": "Ruta",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "IdImgItinerario"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '4ad83cec65adcb4b047aa1fd6ae446ea')"
+    ]
+  }
+}
