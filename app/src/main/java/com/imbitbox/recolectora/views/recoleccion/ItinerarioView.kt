@@ -431,21 +431,24 @@ fun ItinerarioView(
                 CoroutineScope(Dispatchers.Main).launch {
                     val nTotal: Int = objItinerario.data.count() - 1
                     bLoading = true
+                    delay(500)
                     for (i in 0..nTotal) {
                         if (objItinerario.data[i].CatEstatus == 36) {
-                            nIdItinerarioDetalle = objItinerario.data[i].IdItinerarioDetalle
-                            viewModel.getItinerarioDetalleByID(nIdItinerarioDetalle)
+
+                            delay(2000)
+                            bAlertaCapturarTodas = false
+                            viewModel.getItinerarioDetalleByID(objItinerario.data[i].IdItinerarioDetalle)
                             delay(100)
-                            vmRegistroRecoleccion.getRegistroRecoleccionDetalle(nIdItinerarioDetalle)
+                            vmRegistroRecoleccion.getRegistroRecoleccionDetalle(objItinerario.data[i].IdItinerarioDetalle)
                             delay(100)
                             vmRegistroRecoleccion.setDetalleListToSave()
-                            vmRegistroRecoleccion.getImgItinerarioByID(nIdItinerarioDetalle)
+                            vmRegistroRecoleccion.getImgItinerarioByID(objItinerario.data[i].IdItinerarioDetalle)
                             delay(100)
                             vmRegistroRecoleccion.setRoomtoObjImagenes()
                             delay(100)
                             vmRegistroRecoleccion.saveItinerarioDetalle(
                                 objItinerario = clRegistroRecoleccionSaveAll(
-                                    IdItinerarioDetalle = nIdItinerarioDetalle,
+                                    IdItinerarioDetalle = objItinerario.data[i].IdItinerarioDetalle,
                                     HoraTermino = LocalTime.now().toString().substring(0, 8),
                                     NumeroEmpleado = objItinerarioDetalleDB.NumeroEmpleado.toInt(),
                                     NombreEmpleado = objItinerarioDetalleDB.NombreEmpleado,
@@ -458,11 +461,13 @@ fun ItinerarioView(
                                 ),
                                 objItinerarioDetalleDB
                             )
-                            
+                            nIdItinerarioDetalle = objItinerario.data[i].IdItinerarioDetalle
+                            delay(15000)
+
                         }
                         if (i == nTotal){
-                            delay(5000)
-                            bAlertaCapturarTodas = false
+//                            delay(5000)
+
                         }
                     }
 
