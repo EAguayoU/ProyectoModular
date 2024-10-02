@@ -459,7 +459,9 @@ fun RegistroRecoleccionView(
                         fontSize = 25.sp,
                         color = Color.Black
                     )
-                    Text(text = "Completado", fontSize = 15.sp, color = clrAzul)
+//                    if (objRegistroRecoleccionDetalle.Detalle.isNotEmpty()){
+//                    Text(text = "Completado", fontSize = 15.sp, color = clrAzul)
+//                    }
                 }
                 HSpace(50)
                 BtnStandar(

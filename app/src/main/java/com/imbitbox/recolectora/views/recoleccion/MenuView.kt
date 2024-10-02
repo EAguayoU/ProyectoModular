@@ -152,60 +152,60 @@ fun MenuView(navController: NavController) {
                     )
 
             ) {
-                Column(
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .padding(top = 12.dp, bottom = 12.dp, end = 12.dp)
-                        .height(90.dp)
-                        .width(90.dp)
+//                Column(
+//                    verticalArrangement = Arrangement.Center,
+//                    horizontalAlignment = Alignment.CenterHorizontally,
+//                    modifier = Modifier
+//                        .padding(top = 12.dp, bottom = 12.dp, end = 12.dp)
+//                        .height(90.dp)
+//                        .width(90.dp)
+////
+//                ) {
+//                    Image(
+//                        painter = painterResource(id = R.drawable.lock),
+//                        contentDescription = null,
+//                        modifier = Modifier
+//                            .width(50.dp)
+//                            .height(50.dp)
+//                    )
+//                    Text(
+//                        text = "Cambiar",
+//                        fontWeight = FontWeight.Bold,
+//                        color = Color.Black,
+//                        modifier = Modifier
+//                            .padding(top = 10.dp)
+//                    )
 //
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.lock),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .width(50.dp)
-                            .height(50.dp)
-                    )
-                    Text(
-                        text = "Cambiar",
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black,
-                        modifier = Modifier
-                            .padding(top = 10.dp)
-                    )
-
-                }
+//                }
+//                Column(
+//                    verticalArrangement = Arrangement.Center,
+//                    horizontalAlignment = Alignment.CenterHorizontally,
+//                    modifier = Modifier
+//                        .padding(top = 12.dp, bottom = 12.dp, end = 12.dp)
+//                        .height(90.dp)
+//                        .width(90.dp)
+//                ) {
+//                    Image(
+//                        painter = painterResource(id = R.drawable.wifi),
+//                        contentDescription = null,
+//                        modifier = Modifier
+//                            .width(50.dp)
+//                            .height(50.dp)
+//                    )
+//                    Text(text = "En Linea",
+//                        fontWeight = FontWeight.Bold,
+//                        color = Color.Black,
+//                            modifier = Modifier
+//                            .padding(top = 10.dp))
+//
+//                }
                 Column(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
                         .padding(top = 12.dp, bottom = 12.dp, end = 12.dp)
                         .height(90.dp)
-                        .width(90.dp)
-                ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.wifi),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .width(50.dp)
-                            .height(50.dp)
-                    )
-                    Text(text = "En Linea",
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black,
-                            modifier = Modifier
-                            .padding(top = 10.dp))
-
-                }
-                Column(
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .padding(top = 12.dp, bottom = 12.dp, end = 12.dp)
-                        .height(90.dp)
-                        .width(90.dp)
+                        .width(150.dp)
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.logout),
@@ -224,7 +224,7 @@ fun MenuView(navController: NavController) {
                                 //}
                             }
                     )
-                    Text(text = "Salir",
+                    Text(text = "Cerrar Sesión",
                         fontWeight = FontWeight.Bold,
                         color = Color.Black,
                         modifier = Modifier
@@ -233,6 +233,14 @@ fun MenuView(navController: NavController) {
 
             }
         }
+        Text(text = "Menu",
+            fontWeight = FontWeight.Bold,
+            color = Color.Black,
+            fontSize = 35.sp,
+            modifier = Modifier
+                .padding(horizontal = 25.dp, vertical = 5.dp)
+        )
+//        VSpace(-70)
         Column(
             verticalArrangement = Arrangement.SpaceEvenly,
             horizontalAlignment = Alignment.Start,
@@ -249,16 +257,16 @@ fun MenuView(navController: NavController) {
             ) {
                 navController.navigate("SeleccionRuta/${objUser.IdEmpleado}")
             }
-            VSpace(15)
+            VSpace(5)
             BtnMenuItems(
                 nImagen = R.drawable.vehiculo,
                 sText = "Vehículo",
-                sDescription = "Selecciona tu vehículo de recolección"
+                sDescription = "Captura el Km de tu vehículo"
             ) {
                 navController.navigate("RegistroVehiculo/${objUser.Usuario}"){
                 }
             }
-            VSpace(15)
+            VSpace(5)
             BtnMenuItems(
                 nImagen = R.drawable.itinerario,
                 sText = "Itinerario",
@@ -295,21 +303,21 @@ fun MenuView(navController: NavController) {
                 }
             }
             VSpace(15)
-            BtnMenuItems(
-                nImagen = R.drawable.tirar_carga,
-                sText = "Tirar Carga",
-                sDescription = "Registra un páro para tirar la carga recolectada"
-            ) {
-//                navController.navigate("Itinerario/${objRuta.IdItinerario}/${objRuta.IdVehiculo}/${objUser.Usuario}")
-            }
-            VSpace(15)
-            BtnMenuItems(
-                nImagen = R.drawable.senal_stop,
-                sText = "Detener",
-                sDescription = "Registre una incidencia por la cual no puedas continuar"
-            ) {
-//                navController.navigate("Itinerario/${objRuta.IdItinerario}/${objRuta.IdVehiculo}/${objUser.Usuario}")
-            }
+//            BtnMenuItems(
+//                nImagen = R.drawable.tirar_carga,
+//                sText = "Tirar Carga",
+//                sDescription = "Registra un páro para tirar la carga recolectada"
+//            ) {
+////                navController.navigate("Itinerario/${objRuta.IdItinerario}/${objRuta.IdVehiculo}/${objUser.Usuario}")
+//            }
+//            VSpace(15)
+//            BtnMenuItems(
+//                nImagen = R.drawable.senal_stop,
+//                sText = "Detener",
+//                sDescription = "Registre una incidencia por la cual no puedas continuar"
+//            ) {
+////                navController.navigate("Itinerario/${objRuta.IdItinerario}/${objRuta.IdVehiculo}/${objUser.Usuario}")
+//            }
 
         }
 
@@ -367,13 +375,13 @@ fun BtnMenuItems(nImagen: Int, sText: String, sDescription: String, onClick: () 
                 text = sText,
                 fontWeight = FontWeight.Bold,
                 color = Color.Black,
-                fontSize = 20.sp,
+                fontSize = 25.sp,
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
             Text(
                 text = sDescription,
                 color = Color.Black,
-                fontSize = 13.sp,
+                fontSize = 15.sp,
                 modifier = Modifier.padding(horizontal = 20.dp)
             )
         }

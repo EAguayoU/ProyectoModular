@@ -307,6 +307,7 @@ fun RegistroRecoleccionDetalleView(navController: NavController, nIdSucursal: In
 
                             }
                         }
+//                        VSpace(5)
                         Text(
                             text = servicio.TipoServicio,
                             color = clrGrisOscuro,
@@ -316,6 +317,7 @@ fun RegistroRecoleccionDetalleView(navController: NavController, nIdSucursal: In
                                 .background(objColor)
                                 .height(40.dp)
                                 .weight(2f)
+                                .padding(top = 7.dp)
 
                         )
 

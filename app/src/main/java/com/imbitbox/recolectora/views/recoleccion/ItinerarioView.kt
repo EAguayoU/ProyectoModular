@@ -123,6 +123,7 @@ fun ItinerarioView(
     var bAlertaSucursal by remember { mutableStateOf(value = false) }
     var bAlertaConsulta by remember { mutableStateOf(value = false) }
     var bAlertaTermino by remember { mutableStateOf(value = false) }
+    var bAlertaCapturarTodas by remember { mutableStateOf(value = false) }
     var bGuardadoCompleto by remember { mutableStateOf(value = false) }
     val Context = LocalContext.current
     val dataStore = clDataStore(Context)
@@ -317,12 +318,12 @@ fun ItinerarioView(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 10.dp),
-            sText = "Finalizar",
+            sText = "Capturar",
             nFontSize = 25,
             containerColor = clrVerde,
             nRoundedCorner = 30,
         ) {
-
+            bAlertaCapturarTodas = true
         }
     }
 
@@ -421,6 +422,58 @@ fun ItinerarioView(
             icon = Icons.Default.Warning
         )
     }
+    if (bAlertaCapturarTodas){
+        AlertDialogYesNo(
+            onDismissRequest = {
+                bAlertaCapturarTodas = false
+            },
+            onConfirmation = {
+                CoroutineScope(Dispatchers.Main).launch {
+                    val nTotal: Int = objItinerario.data.count() - 1
+                    bLoading = true
+                    for (i in 0..nTotal) {
+                        if (objItinerario.data[i].CatEstatus == 36) {
+                            nIdItinerarioDetalle = objItinerario.data[i].IdItinerarioDetalle
+                            viewModel.getItinerarioDetalleByID(nIdItinerarioDetalle)
+                            delay(100)
+                            vmRegistroRecoleccion.getRegistroRecoleccionDetalle(nIdItinerarioDetalle)
+                            delay(100)
+                            vmRegistroRecoleccion.setDetalleListToSave()
+                            vmRegistroRecoleccion.getImgItinerarioByID(nIdItinerarioDetalle)
+                            delay(100)
+                            vmRegistroRecoleccion.setRoomtoObjImagenes()
+                            delay(100)
+                            vmRegistroRecoleccion.saveItinerarioDetalle(
+                                objItinerario = clRegistroRecoleccionSaveAll(
+                                    IdItinerarioDetalle = nIdItinerarioDetalle,
+                                    HoraTermino = LocalTime.now().toString().substring(0, 8),
+                                    NumeroEmpleado = objItinerarioDetalleDB.NumeroEmpleado.toInt(),
+                                    NombreEmpleado = objItinerarioDetalleDB.NombreEmpleado,
+                                    FirmaDigital = objItinerarioDetalleDB.FirmaDigital,
+                                    Usuario = objUser.IdUsuario,
+                                    IpOS = "Android " + Build.VERSION.RELEASE,
+                                    MqnVersion = "Version " + BuildConfig.VERSION_NAME,
+                                    Imagenes = objImagenesItinerario.Imagenes,
+                                    Detalle = objRegistroRecoleccionDetalle.Detalle
+                                ),
+                                objItinerarioDetalleDB
+                            )
+                            
+                        }
+                        if (i == nTotal){
+                            delay(5000)
+                            bAlertaCapturarTodas = false
+                        }
+                    }
+
+//                    navController.navigate("Itinerario")
+                }
+            },
+            dialogTitle = "Guardar Datos",
+            dialogText = "Deseas capturar las sucursales con estatus \"Termino\"? ",
+            icon = Icons.Default.Warning
+        )
+    }
     if (bAlertaConsulta) {
         AlertDialogOnly(
             onConfirmation = { bAlertaConsulta = false },
@@ -501,7 +554,9 @@ fun ItinerarioView(
                 vmRegistroRecoleccion.delObjItinerarioTerminado()
 
             }
-            navController.navigate("Itinerario")
+//                if (bAlertaCapturarTodas == false) {
+//                    navController.navigate("Itinerario")
+//                }
         }
         else if (!objItinerarioGuardado.success && objItinerarioGuardado.date != "") {
             bAlertaGuardado = true
