@@ -124,6 +124,7 @@ fun ItinerarioView(
     var bAlertaConsulta by remember { mutableStateOf(value = false) }
     var bAlertaTermino by remember { mutableStateOf(value = false) }
     var bAlertaCapturarTodas by remember { mutableStateOf(value = false) }
+    var bCapturado by remember { mutableStateOf(value = false) }
     var bGuardadoCompleto by remember { mutableStateOf(value = false) }
     val Context = LocalContext.current
     val dataStore = clDataStore(Context)
@@ -183,99 +184,99 @@ fun ItinerarioView(
     )
     {
         if (objItinerario.success) {
-        LazyColumn(
-            modifier = Modifier
-                .padding(top = 80.dp, bottom = 90.dp)
-                .background(color = Color(0xffeeeefb))
-        ) {
+            LazyColumn(
+                modifier = Modifier
+                    .padding(top = 80.dp, bottom = 40.dp)
+                    .background(color = Color(0xffeeeefb))
+            ) {
 
                 items(objItinerario.data.sortedBy { it.Orden }) { item ->
-                Row(
-                    horizontalArrangement = Arrangement.Start,
-                    verticalAlignment = Alignment.Top,
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .padding(horizontal = 10.dp, vertical = 10.dp)
-                        .shadow(5.dp, shape = RoundedCornerShape(10.dp))
+                    Row(
+                        horizontalArrangement = Arrangement.Start,
+                        verticalAlignment = Alignment.Top,
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .padding(horizontal = 10.dp, vertical = 10.dp)
+                            .shadow(5.dp, shape = RoundedCornerShape(10.dp))
 
-                        .border(
-                            BorderStroke(
-                                2.dp, if (item.Estatus == "PENDIENTE") {
-                                    Color.Green
-                                } else if (item.Estatus == "TERMINO") {
-                                    Color.Red
-                                } else {
-                                    Color.Yellow
+                            .border(
+                                BorderStroke(
+                                    2.dp, if (item.Estatus == "PENDIENTE") {
+                                        Color.Green
+                                    } else if (item.Estatus == "TERMINO") {
+                                        Color.Red
+                                    } else {
+                                        Color.Yellow
+                                    }
+                                ), shape = RoundedCornerShape(10.dp)
+                            )
+                            .background(Color.White, RoundedCornerShape(10.dp))
+
+                            .selectable(
+                                selected = item.IdItinerarioDetalle != 0,
+                                onClick = {
+                                    if (item.CatEstatus == 33) {
+                                        bAlertaSucursal = true
+                                        nIdItinerarioDetalle = item.IdItinerarioDetalle
+                                    } else if (item.CatEstatus == 34 || item.CatEstatus == 35) {
+                                        nIdItinerarioDetalle = item.IdItinerarioDetalle
+                                        navController.navigate("DatosSucursal/${item.IdItinerarioDetalle}")
+                                    } else if (item.CatEstatus == 36) {
+                                        nIdItinerarioDetalle = item.IdItinerarioDetalle
+                                        bAlertaTermino = true
+                                    }
                                 }
-                            ), shape = RoundedCornerShape(10.dp)
+
+                            )
+                    ) {
+
+                        Column(
+                            verticalArrangement = Arrangement.spacedBy(15.dp),
+                            horizontalAlignment = Alignment.Start,
+                            modifier = Modifier
+                                .weight(4f)
+                                .padding(10.dp)
                         )
-                        .background(Color.White, RoundedCornerShape(10.dp))
+                        {
+                            Text(
+                                text = item.Sucursal,
+                                fontStyle = FontStyle.Italic,
+                                fontSize = 17.sp,
+                                color = Color.Black
+                            )
+                            Text(
+                                text = item.Cliente,
+                                color = Color.Black
+                            )
+                            Row(Modifier.fillMaxWidth()) {
 
-                        .selectable(
-                            selected = item.IdItinerarioDetalle != 0,
-                            onClick = {
-                                if (item.CatEstatus == 33) {
-                                    bAlertaSucursal = true
-                                    nIdItinerarioDetalle = item.IdItinerarioDetalle
-                                } else if (item.CatEstatus == 34 || item.CatEstatus == 35) {
-                                    nIdItinerarioDetalle = item.IdItinerarioDetalle
-                                    navController.navigate("DatosSucursal/${item.IdItinerarioDetalle}")
-                                } else if (item.CatEstatus == 36) {
-                                    nIdItinerarioDetalle = item.IdItinerarioDetalle
-                                    bAlertaTermino = true
-                                }
+                                Text(
+                                    text = item.Estatus,
+                                    color = if (item.Estatus == "PENDIENTE") {
+                                        clrVerde
+                                    }
+                                    else if(item.Estatus == "TERMINO"){
+                                        Color.Red
+                                    }
+                                    else {
+                                        Color(0xFFBBBB62)
+
+                                    }
+                                )
+                                Text(
+                                    text = item.Horario,
+                                    color = clrAzul,
+                                    textAlign = TextAlign.End,
+                                    modifier = Modifier
+                                        .weight(4f)
+
+                                )
                             }
 
-                        )
-                ) {
-
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(15.dp),
-                        horizontalAlignment = Alignment.Start,
-                        modifier = Modifier
-                            .weight(4f)
-                            .padding(10.dp)
-                    )
-                    {
-                        Text(
-                            text = item.Sucursal,
-                            fontStyle = FontStyle.Italic,
-                            fontSize = 17.sp,
-                            color = Color.Black
-                        )
-                        Text(
-                            text = item.Cliente,
-                            color = Color.Black
-                        )
-                        Row(Modifier.fillMaxWidth()) {
-
-                            Text(
-                                text = item.Estatus,
-                                color = if (item.Estatus == "PENDIENTE") {
-                                    clrVerde
-                                }
-                                else if(item.Estatus == "TERMINO"){
-                                    Color.Red
-                                }
-                                else {
-                                    Color(0xFFBBBB62)
-
-                                }
-                            )
-                            Text(
-                                text = item.Horario,
-                                color = clrAzul,
-                                textAlign = TextAlign.End,
-                                modifier = Modifier
-                                    .weight(4f)
-
-                            )
                         }
-
                     }
                 }
             }
-        }
         } else if (!objItinerario.success && objItinerario.date != "") {
             NoDataView()
         }
@@ -298,6 +299,7 @@ fun ItinerarioView(
                 fontSize = 11.sp,
                 modifier = Modifier
                     .padding(top = 10.dp)
+                    .padding(horizontal = 5.dp)
             )
             Text(
                 text = "Longitud: ${clLocation.currentLocation.Longitude}",
@@ -314,17 +316,17 @@ fun ItinerarioView(
                     .padding(10.dp)
             )
         }
-        BtnStandar(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 10.dp),
-            sText = "Capturar",
-            nFontSize = 25,
-            containerColor = clrVerde,
-            nRoundedCorner = 30,
-        ) {
-            bAlertaCapturarTodas = true
-        }
+//        BtnStandar(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(horizontal = 10.dp),
+//            sText = "Capturar",
+//            nFontSize = 25,
+//            containerColor = clrVerde,
+//            nRoundedCorner = 30,
+//        ) {
+//            bAlertaCapturarTodas = true
+//        }
     }
 
     if(bAlerta){
@@ -385,11 +387,11 @@ fun ItinerarioView(
             onDismissRequest = {
                 navController.navigate("DatosSucursal/${nIdItinerarioDetalle}")
                 bAlertaTermino = false
-                               },
+            },
             onConfirmation = {
                 CoroutineScope(Dispatchers.Main).launch {
                     bLoading = true
-                viewModel.getItinerarioDetalleByID(nIdItinerarioDetalle)
+                    viewModel.getItinerarioDetalleByID(nIdItinerarioDetalle)
                     delay(100)
                     vmRegistroRecoleccion.getRegistroRecoleccionDetalle(nIdItinerarioDetalle)
                     delay(100)
@@ -399,20 +401,20 @@ fun ItinerarioView(
                     vmRegistroRecoleccion.setRoomtoObjImagenes()
                     delay(100)
                     vmRegistroRecoleccion.saveItinerarioDetalle(
-                    objItinerario = clRegistroRecoleccionSaveAll(
-                        IdItinerarioDetalle = nIdItinerarioDetalle,
-                        HoraTermino = LocalTime.now().toString().substring(0, 8),
-                        NumeroEmpleado = objItinerarioDetalleDB.NumeroEmpleado.toInt(),
-                        NombreEmpleado = objItinerarioDetalleDB.NombreEmpleado,
-                        FirmaDigital = objItinerarioDetalleDB.FirmaDigital,
-                        Usuario = objUser.IdUsuario,
-                        IpOS = "Android " + Build.VERSION.RELEASE,
-                        MqnVersion = "Version " + BuildConfig.VERSION_NAME,
-                        Imagenes = objImagenesItinerario.Imagenes,
-                        Detalle = objRegistroRecoleccionDetalle.Detalle
-                    ),
-                    objItinerarioDetalleDB
-                )
+                        objItinerario = clRegistroRecoleccionSaveAll(
+                            IdItinerarioDetalle = nIdItinerarioDetalle,
+                            HoraTermino = LocalTime.now().toString().substring(0, 8),
+                            NumeroEmpleado = objItinerarioDetalleDB.NumeroEmpleado.toInt(),
+                            NombreEmpleado = objItinerarioDetalleDB.NombreEmpleado,
+                            FirmaDigital = objItinerarioDetalleDB.FirmaDigital,
+                            Usuario = objUser.IdUsuario,
+                            IpOS = "Android " + Build.VERSION.RELEASE,
+                            MqnVersion = "Version " + BuildConfig.VERSION_NAME,
+                            Imagenes = objImagenesItinerario.Imagenes,
+                            Detalle = objRegistroRecoleccionDetalle.Detalle
+                        ),
+                        objItinerarioDetalleDB
+                    )
 
                     bAlertaTermino = false
                 }
@@ -431,47 +433,17 @@ fun ItinerarioView(
                 CoroutineScope(Dispatchers.Main).launch {
                     val nTotal: Int = objItinerario.data.count() - 1
                     bLoading = true
-                    delay(500)
                     for (i in 0..nTotal) {
                         if (objItinerario.data[i].CatEstatus == 36) {
-
-                            delay(2000)
-                            bAlertaCapturarTodas = false
-                            viewModel.getItinerarioDetalleByID(objItinerario.data[i].IdItinerarioDetalle)
-                            delay(100)
-                            vmRegistroRecoleccion.getRegistroRecoleccionDetalle(objItinerario.data[i].IdItinerarioDetalle)
-                            delay(100)
-                            vmRegistroRecoleccion.setDetalleListToSave()
-                            vmRegistroRecoleccion.getImgItinerarioByID(objItinerario.data[i].IdItinerarioDetalle)
-                            delay(100)
-                            vmRegistroRecoleccion.setRoomtoObjImagenes()
-                            delay(100)
-                            vmRegistroRecoleccion.saveItinerarioDetalle(
-                                objItinerario = clRegistroRecoleccionSaveAll(
-                                    IdItinerarioDetalle = objItinerario.data[i].IdItinerarioDetalle,
-                                    HoraTermino = LocalTime.now().toString().substring(0, 8),
-                                    NumeroEmpleado = objItinerarioDetalleDB.NumeroEmpleado.toInt(),
-                                    NombreEmpleado = objItinerarioDetalleDB.NombreEmpleado,
-                                    FirmaDigital = objItinerarioDetalleDB.FirmaDigital,
-                                    Usuario = objUser.IdUsuario,
-                                    IpOS = "Android " + Build.VERSION.RELEASE,
-                                    MqnVersion = "Version " + BuildConfig.VERSION_NAME,
-                                    Imagenes = objImagenesItinerario.Imagenes,
-                                    Detalle = objRegistroRecoleccionDetalle.Detalle
-                                ),
-                                objItinerarioDetalleDB
-                            )
-                            nIdItinerarioDetalle = objItinerario.data[i].IdItinerarioDetalle
-                            delay(15000)
-
-                        }
-                        if (i == nTotal){
-//                            delay(5000)
+                            if (bCapturado == false) {
+                                bAlertaCapturarTodas = false
+                                nIdItinerarioDetalle = objItinerario.data[i].IdItinerarioDetalle
+                                delay(15000)
+                                bCapturado = true
+                            }
 
                         }
                     }
-
-//                    navController.navigate("Itinerario")
                 }
             },
             dialogTitle = "Guardar Datos",
@@ -493,7 +465,7 @@ fun ItinerarioView(
                 bAlertaGuardado = false
                 //navController.navigate("Itinerario/${objItinerarioDetalleDB.IdItinerario}/${objItinerarioDetalleDB.IdVehiculo}/${sUsuario}/${nIdUsuario}")
                 navController.navigate("Itinerario")
-                             },
+            },
             dialogTitle = sTitleAlerta,
             dialogText = sTextAlerta,
             icon = Icons.Default.Warning
@@ -502,6 +474,36 @@ fun ItinerarioView(
     if (bLoading) {
         BoxLoading(true, sText = "Cargando...")
     }
+    LaunchedEffect(key1 = bCapturado) {
+        if (bCapturado) {
+            viewModel.getItinerarioDetalleByID(nIdItinerarioDetalle)
+            delay(100)
+            vmRegistroRecoleccion.getRegistroRecoleccionDetalle(nIdItinerarioDetalle)
+            delay(100)
+            vmRegistroRecoleccion.setDetalleListToSave()
+            vmRegistroRecoleccion.getImgItinerarioByID(nIdItinerarioDetalle)
+            delay(100)
+            vmRegistroRecoleccion.setRoomtoObjImagenes()
+            delay(100)
+            vmRegistroRecoleccion.saveItinerarioDetalle(
+                objItinerario = clRegistroRecoleccionSaveAll(
+                    IdItinerarioDetalle = nIdItinerarioDetalle,
+                    HoraTermino = LocalTime.now().toString().substring(0, 8),
+                    NumeroEmpleado = objItinerarioDetalleDB.NumeroEmpleado.toInt(),
+                    NombreEmpleado = objItinerarioDetalleDB.NombreEmpleado,
+                    FirmaDigital = objItinerarioDetalleDB.FirmaDigital,
+                    Usuario = objUser.IdUsuario,
+                    IpOS = "Android " + Build.VERSION.RELEASE,
+                    MqnVersion = "Version " + BuildConfig.VERSION_NAME,
+                    Imagenes = objImagenesItinerario.Imagenes,
+                    Detalle = objRegistroRecoleccionDetalle.Detalle
+                ),
+                objItinerarioDetalleDB
+            )
+//                bCapturado = false
+        }
+    }
+
     LaunchedEffect(key1 = objItinerario.date) {
         bLoading = false
         if(!objItinerario.success && objItinerario.date != ""){
@@ -557,11 +559,24 @@ fun ItinerarioView(
                     nIdItinerarioDetalle
                 )
                 vmRegistroRecoleccion.delObjItinerarioTerminado()
-
             }
-//                if (bAlertaCapturarTodas == false) {
-//                    navController.navigate("Itinerario")
+//            if (bCapturado){
+//                CoroutineScope(Dispatchers.Main).launch {
+//                    bCapturado = false
+//                    val nTotal: Int = objItinerario.data.count() - 1
+//                    bLoading = true
+//                    for (i in 0..nTotal) {
+//                        if (objItinerario.data[i].CatEstatus == 36 && objItinerario.data[i].Eliminado == false) {
+//                            nIdItinerarioDetalle = objItinerario.data[i].IdItinerarioDetalle
+//                            delay(15000)
+//                            bCapturado = true
+//                        }
+//                    }
 //                }
+//            }
+//terminado
+            navController.navigate("Itinerario")
+
         }
         else if (!objItinerarioGuardado.success && objItinerarioGuardado.date != "") {
             bAlertaGuardado = true
