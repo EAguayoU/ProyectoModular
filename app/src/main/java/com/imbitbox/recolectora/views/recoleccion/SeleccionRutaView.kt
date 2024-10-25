@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.filled.Refresh
@@ -70,6 +71,7 @@ fun SeleccionRutaView(navController: NavController, viewModel : clItinerarioView
     var bLoading by remember { mutableStateOf(value = false) }
     val objRuta by viewModel.itinerario.collectAsState(clItinerarioApi(false,0,"",",","", "", emptyList()))
     var bAlerta by remember { mutableStateOf(value = false) }
+    var bAlertaAsignado by remember { mutableStateOf(value = false) }
 
 
     Scaffold(
@@ -162,7 +164,8 @@ fun SeleccionRutaView(navController: NavController, viewModel : clItinerarioView
                         IconButton(
                             onClick = {
                                 dataStore.saveStoreRuta(Gson().toJson(item))
-                                navController.popBackStack("Menu", false)
+                                bAlertaAsignado = true
+
                                       },
                             modifier = Modifier
                                 .size(60.dp)
@@ -204,6 +207,18 @@ fun SeleccionRutaView(navController: NavController, viewModel : clItinerarioView
             icon = Icons.Default.Warning
         )
     }
+    if (bAlertaAsignado) {
+        AlertDialogOnly(
+            onConfirmation = {
+                bAlertaAsignado = false
+                navController.popBackStack("Menu", false)
+                             },
+            dialogTitle = "Asignado",
+            dialogText = "Se asigno la ruta correctamente",
+            icon = Icons.Default.CheckCircle
+        )
+    }
+
     LaunchedEffect(key1 = objRuta.date) {
         bLoading = false
     }

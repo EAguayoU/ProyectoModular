@@ -243,8 +243,14 @@ fun RegistroVehiculoView(navController: NavController, viewModel: clVehiculoView
                     ) {
                         if(sKilometros != ""){
                             //CoroutineScope(Dispatchers.IO).launch {
-                            bLoading = true
-                            viewModel.setVehiculoKm(objVehiculo.data[0].IdVehiculo, sKilometros.toInt(), objUser.Usuario)
+                            if(objVehiculo.success) {
+                                bLoading = true
+                                viewModel.setVehiculoKm(
+                                    objVehiculo.data[0].IdVehiculo,
+                                    sKilometros.toInt(),
+                                    objUser.Usuario
+                                )
+                            }
                             //}
                         }
                     }
